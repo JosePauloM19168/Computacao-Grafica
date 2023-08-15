@@ -114,3 +114,131 @@ plt.show()
 
 cv2.imshow('saida_pretobranco.jpg',CanalPretoBranco)
 cv2.waitKey(0)
+
+
+#novo
+import cv2
+import numpy 
+import matplotlib.pyplot as plt
+
+
+poze ='paz.jpg'
+imagem = cv2.imread(poze)
+print('Largura em pixels: ' ,end='')
+print (imagem.shape[1])
+
+print('Altura em pixels: ' ,end='')
+print (imagem.shape[0])
+
+print('Quantidade de canais:', end='')
+print(imagem.shape[2])
+
+cv2.imshow("Nome da Janela", imagem)
+ 
+
+
+cv2.imwrite("saida.jpg",imagem)
+
+(b,g,r) = imagem [0,0]
+
+#cv2.imshow("saida_b.jpg",imagem[:,:,0])      
+#cv2.imshow("saida_g.jpg",imagem[:,:,1])
+#cv2.imshow("saida_r.jpg",imagem[:,:,2])      
+#cv2.waitKey(0)      
+
+#cv2.imwrite("saida_b.jpg",imagem[:,:,0])      
+#cv2.imwrite("saida_g.jpg",imagem[:,:,1])
+#cv2.imwrite("saida_r.jpg",imagem[:,:,2])  
+
+CanalAzul = numpy.zeros((imagem.shape[0], imagem.shape[1] , imagem.shape[2]), dtype=numpy.uint8)
+CanalVerde = numpy.zeros((imagem.shape[0], imagem.shape[1] , imagem.shape[2]), dtype=numpy.uint8)
+CanalVermelho =numpy.zeros((imagem.shape[0], imagem.shape[1], imagem.shape[2]), dtype=numpy.uint8)
+CanalPretoBranco=numpy.zeros((imagem.shape[0], imagem.shape[1]), dtype=numpy.uint8)
+CanalPreto=numpy.zeros((imagem.shape[0], imagem.shape[1]), dtype=numpy.uint8)
+
+CanalAzul[:,:,0] = imagem[:,:,0]
+CanalVerde[:,:,1] = imagem[:,:,1]
+CanalVermelho[:,:,2]= imagem[:,:,2]                                     
+
+cv2.imshow("saida_b.jpg",CanalAzul)      
+cv2.imshow("saida_g.jpg", CanalVerde)
+cv2.imshow("saida_r.jpg",CanalVermelho)      
+     
+
+cv2.imwrite("saida_b.jpg",CanalAzul)      
+cv2.imwrite("saida_g.jpg",CanalVerde)
+cv2.imwrite("saida_r.jpg",CanalVermelho) 
+
+histograma = [0]*256
+for i in range(imagem.shape[0]):
+    for j in range(imagem.shape[1]):
+        CanalPretoBranco[i][j]=(imagem[i][j].sum()//3)
+        histograma[CanalPretoBranco[i][j]]+=1
+        
+histogramaAzul = [0]*256
+for i in range(imagem.shape[0]):
+    for j in range(imagem.shape[1]):
+        
+        histogramaAzul[imagem[i][j][0]]+=1
+        
+histogramaVerde = [0]*256
+for i in range(imagem.shape[0]):
+    for j in range(imagem.shape[1]):       
+        histogramaVerde[imagem[i][j][1]]+=1     
+
+histogramaVermelho = [0]*256
+for i in range(imagem.shape[0]):
+    for j in range(imagem.shape[1]):      
+        histogramaVermelho[imagem[i][j][2]]+=1   
+
+
+
+
+CanalSemcor = [0]*256
+for i in range(imagem.shape[0]):
+    for j in range(imagem.shape[1]):      
+        if  CanalPretoBranco[i][j]<120:
+          CanalPretoBranco[i][j]=255   
+            
+Canalpreto = [0]*256
+for i in range(imagem.shape[0]):
+    for j in range(imagem.shape[1]):      
+        if  CanalPreto[i][j]>120:
+          CanalPreto[i][j]=0   
+        
+
+pixel =256*[0]
+for i in range(256):
+    pixel[i] = i
+
+#gafico preto e branco    
+plt.xlabel('Pixel')
+plt.ylabel('Quantidade')
+plt.title('histograma da imagem')
+plt.bar(pixel,histograma, color='blue')
+plt.show()
+
+#gafico azul
+plt.xlabel('Pixel')
+plt.ylabel('Quantidade')
+plt.title('histograma da imagem')
+plt.bar(pixel,histogramaAzul, color='blue')
+plt.show()
+
+#gafico verde
+plt.xlabel('Pixel')
+plt.ylabel('Quantidade')
+plt.title('histograma da imagem')
+plt.bar(pixel,histogramaVerde, color='green')
+plt.show()
+
+#gafico vermelho
+plt.xlabel('Pixel')
+plt.ylabel('Quantidade')
+plt.title('histograma da imagem')
+plt.bar(pixel,histogramaVermelho, color='red')
+plt.show()
+
+
+cv2.imshow('saida_pretobranco.jpg',CanalPretoBranco)
+cv2.waitKey(0)
