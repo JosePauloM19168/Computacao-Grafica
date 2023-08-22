@@ -163,3 +163,36 @@ cv2.imshow('saida_pretobranco.jpg',CanalPretoBranco)
 cv2.waitKey(0)
         
 #S= imagem alterada l=luminosidade cr=imagem original
+
+
+#teste
+y= 256*[0]
+x= 256*[0]
+    for i in range(256):
+        x[i] = i
+        y[i] = i
+        y[i] = 255.y[i]
+         if y[i]>255:
+             y[i]=255
+         if y[i]<0:
+             y[i]=0
+
+plt.figure(Foto)
+
+plt.xlabel('origem p')
+plt.ylabel('destino s')
+plt.title('curva de tom')
+
+plt.plot(x,y,color='yellow')
+plt.show()
+cv2.imrite('arvore.jpg',CanalPretoBranco)
+
+#testando funcao
+Foto = [0]*256
+for i in range(imagem.shape[0]):
+    for j in range(imagem.shape[1]):      
+        if  CanalPretoBranco[i][j]>255:
+          CanalPretoBranco[i][j]=255
+        else:
+              if CanalPretoBranco[i][j]<0:
+                  CanalPretoBranco[i][j]=0
