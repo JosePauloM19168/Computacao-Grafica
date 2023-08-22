@@ -196,3 +196,4 @@ for i in range(imagem.shape[0]):
         else:
               if CanalPretoBranco[i][j]<0:
                   CanalPretoBranco[i][j]=0
+ imDest[i][j]=CanalPretoBranco[i][j]+50
